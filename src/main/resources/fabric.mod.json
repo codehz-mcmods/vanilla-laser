@@ -3,7 +3,7 @@
   "id": "${mod_id}",
   "version": "${version}",
   "name": "Vanilla Laser",
-  "description": "Vanilla Laser for minecraft",
+  "description": "Laser Beam for vanilla minecraft (Server side)",
   "authors": [
     "CodeHz"
   ],
