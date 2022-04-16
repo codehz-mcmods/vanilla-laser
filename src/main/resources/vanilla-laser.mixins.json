@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "moe.hertz.vanilla_laser.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "EntityMixin",
+    "GuardianEntityMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
