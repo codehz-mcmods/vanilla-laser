@@ -1,18 +1,18 @@
 plugins {
     id 'fabric-loom' version '0.12.10'
     id 'maven-publish'
-    // id 'com.palantir.git-version' version "0.15.0"
+    id 'com.palantir.git-version' version "0.15.0"
 }
 
 version = "0.1.0"
 group = project.maven_group
 
 version '0.0.0-SNAPSHOT'
-// try {
-//     version versionDetails().lastTag
-//     def ENV = System.getenv()
-//     version = version + (ENV.GITHUB_ACTIONS || ENV.JITPACK ? "" : "+local")
-// } catch (ex) {}
+try {
+    version versionDetails().lastTag
+    def ENV = System.getenv()
+    version = version + (ENV.GITHUB_ACTIONS || ENV.JITPACK ? "" : "+local")
+} catch (ex) {}
 
 repositories {
     mavenCentral()
