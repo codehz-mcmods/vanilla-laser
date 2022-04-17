@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
+import lombok.Getter;
 import moe.hertz.vanilla_laser.mixins.GuardianEntityMixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -19,30 +20,42 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.listener.EntityGameEventHandler;
 
 public class LaserShooterEntity extends Entity {
-  private class FakeGuardian extends FakeEntity {
-    FakeGuardian() {
-      super(EntityType.GUARDIAN, getPos());
+  private class FakeGuardian implements IFakeEntity {
+    @Override
+    public final EntityType<?> getFakeType() {
+      return EntityType.GUARDIAN;
     }
 
-    final Packet<?> data = new DataUpdate()
+    @Getter
+    public final int id = IFakeEntity.generateId();
+    @Getter
+    public final UUID uuid = UUID.randomUUID();
+
+    final Packet<?> data = updateData()
         .flag(EntityFlag.INVISIBLE)
         .noGravity(true)
         .silent(true)
         .build();
 
     Packet<?> updateTarget(int target) {
-      return new DataUpdate()
+      return updateData()
           .add(GuardianEntityMixin.getTargetTracker(), target)
           .build();
     }
   }
 
-  private static class DummyEntity extends FakeEntity {
-    DummyEntity() {
-      super(EntityType.BAT, Vec3d.ZERO);
+  private static class DummyEntity implements IFakeEntity {
+    @Override
+    public final EntityType<?> getFakeType() {
+      return EntityType.BAT;
     }
 
-    final Packet<?> data = new DataUpdate()
+    @Getter
+    public final int id = IFakeEntity.generateId();
+    @Getter
+    public final UUID uuid = UUID.randomUUID();
+
+    final Packet<?> data = updateData()
         .flag(EntityFlag.INVISIBLE)
         .noGravity(true)
         .silent(true)
@@ -82,6 +95,7 @@ public class LaserShooterEntity extends Entity {
   public LaserShooterEntity(EntityType<LaserShooterEntity> type, World world) {
     super(type, world);
     setInvulnerable(true);
+    // getId()
   }
 
   @Override
