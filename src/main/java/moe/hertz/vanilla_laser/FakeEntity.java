@@ -59,6 +59,20 @@ public class FakeEntity {
         Vec3d.ZERO);
   }
 
+  public Packet<?> getSpawnPacket(Vec3d position) {
+    return new EntitySpawnS2CPacket(
+        id,
+        uuid,
+        position.x,
+        position.y,
+        position.z,
+        pitch,
+        yaw,
+        type,
+        entityData,
+        Vec3d.ZERO);
+  }
+
   public Packet<?> getDespawnPacket() {
     return new EntitiesDestroyS2CPacket(id);
   }

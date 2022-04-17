@@ -5,15 +5,30 @@ import me.lortseam.completeconfig.gui.ConfigScreenBuilder;
 import me.lortseam.completeconfig.gui.cloth.ClothConfigScreenBuilder;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.argument.Vec3ArgumentType;
+import net.minecraft.entity.EntityDimensions;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 
 import static net.minecraft.server.command.CommandManager.*;
 
-@Slf4j(topic = "VanillaLaser")
+@Slf4j(topic = "vanilla-laser")
 public class VanillaLaser implements ModInitializer {
+  public static final EntityType<LaserShooterEntity> SHOOTER = Registry.register(
+      Registry.ENTITY_TYPE,
+      new Identifier("laser", "shooter"),
+      FabricEntityTypeBuilder
+          .create(SpawnGroup.CREATURE, LaserShooterEntity::new)
+          .dimensions(EntityDimensions.fixed(0f, 0f))
+          .trackRangeBlocks(0)
+          .build());
+
   @Override
   public void onInitialize() {
     new ModConfig().load();
