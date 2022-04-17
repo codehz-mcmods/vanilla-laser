@@ -8,7 +8,7 @@ import me.lortseam.completeconfig.data.Config;
 @ConfigEntries
 public class ModConfig extends Config implements ConfigContainer {
   @Getter
-  private static boolean commandEnabled = false;
+  private static boolean commandEnabled = true;
 
   @Getter
   private static String commandName = "laser";
