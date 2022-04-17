@@ -41,6 +41,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "com.gitlab.Lortseam:completeconfig:1.4.0"
+    modImplementation "moe.hertz:side-effects:0.1.1"
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'

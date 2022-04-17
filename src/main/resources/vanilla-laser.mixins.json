@@ -4,7 +4,6 @@
   "package": "moe.hertz.vanilla_laser.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "EntityMixin",
     "GuardianEntityMixin"
   ],
   "injectors": {

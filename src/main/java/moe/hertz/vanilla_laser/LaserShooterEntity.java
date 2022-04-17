@@ -8,6 +8,8 @@ import java.util.UUID;
 import org.jetbrains.annotations.Nullable;
 
 import lombok.Getter;
+import moe.hertz.side_effects.EntityFlag;
+import moe.hertz.side_effects.IFakeEntity;
 import moe.hertz.vanilla_laser.mixins.GuardianEntityMixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
