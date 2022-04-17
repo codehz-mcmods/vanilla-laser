@@ -8,7 +8,6 @@ import java.util.UUID;
 import org.jetbrains.annotations.Nullable;
 
 import lombok.Getter;
-import lombok.Setter;
 import moe.hertz.vanilla_laser.mixins.GuardianEntityMixin;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -59,7 +58,6 @@ public class LaserShooterEntity extends Entity implements IFakeEntity {
   private DummyEntity dummy = null;
   private @Nullable UUID targetEntity = null;
   @Getter
-  @Setter
   private @Nullable Vec3d targetPosition = null;
   private Entity cachedTarget;
   private int cachedTargetId = 0;
@@ -72,6 +70,11 @@ public class LaserShooterEntity extends Entity implements IFakeEntity {
       targetEntity = entity.getUuid();
       cachedTarget = entity;
     }
+    updateTarget();
+  }
+
+  public void setTargetPosition(@Nullable Vec3d target) {
+    targetPosition = target;
     updateTarget();
   }
 
@@ -139,6 +142,7 @@ public class LaserShooterEntity extends Entity implements IFakeEntity {
   }
 
   private void updateTarget() {
+    cachedPackets = null;
     if (targetEntity != null) {
       if (cachedTarget == null || !cachedTarget.getUuid().equals(targetEntity)) {
         var sw = (ServerWorld) world;

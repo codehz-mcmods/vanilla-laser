@@ -52,14 +52,16 @@ public class VanillaLaser implements ModInitializer {
           var src = ctx.getSource();
           var source = src.getPosition();
           var target = Vec3ArgumentType.getVec3(ctx, "target-location");
-          createLaser(src.getWorld(), source, target);
+          var laser = createLaser(src.getWorld(), source, target);
+          src.sendFeedback(laser.getDisplayName(), false);
           return 1;
         }));
         create.then(argument("target-entity", EntityArgumentType.entity()).executes(ctx -> {
           var src = ctx.getSource();
           var source = src.getPosition();
           var target = EntityArgumentType.getEntity(ctx, "target-entity");
-          createLaser(src.getWorld(), source, target);
+          var laser = createLaser(src.getWorld(), source, target);
+          src.sendFeedback(laser.getDisplayName(), false);
           return 1;
         }));
         var list = literal("list").executes(ctx -> {
