@@ -1,25 +1,32 @@
 plugins {
     id 'fabric-loom' version '0.12.10'
     id 'maven-publish'
-    id 'com.palantir.git-version' version "0.15.0"
+    id 'com.palantir.git-version' version '0.15.0'
 }
 
-version = "0.1.0"
 group = project.maven_group
 
 version '0.0.0-SNAPSHOT'
+
 try {
-    version versionDetails().lastTag
+    def details = versionDetails()
+    version = details.lastTag.substring(1)
+    if (details.commitDistance > 0) {
+        version += "+" + details.commitDistance + "." + details.gitHash;
+    }
     def ENV = System.getenv()
-    version = version + (ENV.GITHUB_ACTIONS || ENV.JITPACK ? "" : "+local")
-} catch (ex) {}
+    if (!ENV.GITHUB_ACTIONS && !ENV.JITPACK) {
+        version += details.isCleanTag ? "+local" : "+dirty"
+    }
+} catch (ex) {
+    println ex
+}
 
 repositories {
     mavenCentral()
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://jitpack.io" }
-
 }
 
 processResources {
@@ -41,7 +48,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "com.gitlab.Lortseam:completeconfig:1.4.0"
-    modImplementation "moe.hertz:side-effects:0.1.1"
+    include modImplementation("moe.hertz:side-effects:0.1.3")
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
