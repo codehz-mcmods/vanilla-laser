@@ -8,18 +8,15 @@ group = project.maven_group
 
 version '0.0.0-SNAPSHOT'
 
-try {
-    def details = versionDetails()
-    version = details.lastTag.substring(1)
-    if (details.commitDistance > 0) {
-        version += "+" + details.commitDistance + "." + details.gitHash;
-    }
-    def ENV = System.getenv()
-    if (!ENV.GITHUB_ACTIONS && !ENV.JITPACK) {
-        version += details.isCleanTag ? "+local" : "+dirty"
-    }
-} catch (ex) {
-    println ex
+def details = versionDetails()
+def base_version = details.lastTag.substring(1)
+version base_version
+if (details.commitDistance > 0) {
+    version += "+" + details.commitDistance + "." + details.gitHash;
+}
+def ENV = System.getenv()
+if (!ENV.GITHUB_ACTIONS && !ENV.JITPACK) {
+    version += details.isCleanTag ? "+local" : "+dirty"
 }
 
 repositories {
@@ -34,7 +31,7 @@ processResources {
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
-        expand "mod_id": mod_id, "version": project.version
+        expand "mod_id": mod_id, "base_version": base_version
     }
 }
 
@@ -48,7 +45,7 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
     modImplementation "com.gitlab.Lortseam:completeconfig:1.4.0"
-    include modImplementation("moe.hertz:side-effects:0.1.3")
+    modImplementation "moe.hertz:side-effects:v0.1.5"
 
     compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'

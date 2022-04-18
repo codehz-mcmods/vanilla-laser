@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "${mod_id}",
-  "version": "${version}",
+  "version": "${base_version}",
   "name": "Vanilla Laser",
   "description": "Laser Beam for vanilla minecraft (Server side)",
   "authors": [
@@ -30,6 +30,6 @@
     "fabric": "*",
     "minecraft": "1.18.2",
     "completeconfig": "~1.4.0",
-    "side-effects": "~0.1.3"
+    "side-effects": "~0.1.5"
   }
 }
