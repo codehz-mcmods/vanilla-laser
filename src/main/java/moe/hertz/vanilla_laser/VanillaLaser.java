@@ -2,6 +2,9 @@ package moe.hertz.vanilla_laser;
 
 import me.lortseam.completeconfig.gui.ConfigScreenBuilder;
 import me.lortseam.completeconfig.gui.cloth.ClothConfigScreenBuilder;
+import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
@@ -26,7 +29,7 @@ import static net.minecraft.server.command.CommandManager.*;
 import java.util.Arrays;
 import java.util.Optional;
 
-public class VanillaLaser implements ModInitializer {
+public class VanillaLaser implements ModInitializer, ClientModInitializer {
   public static final EntityType<LaserShooterEntity> SHOOTER = Registry.register(
       Registry.ENTITY_TYPE,
       new Identifier("laser", "shooter"),
@@ -36,12 +39,16 @@ public class VanillaLaser implements ModInitializer {
           .build());
 
   @Override
-  public void onInitialize() {
-    new ModConfig().load();
-
+  @Environment(EnvType.CLIENT)
+  public void onInitializeClient() {
     if (FabricLoader.getInstance().isModLoaded("cloth-config")) {
       ConfigScreenBuilder.setMain("vanilla-laser", new ClothConfigScreenBuilder());
     }
+  }
+
+  @Override
+  public void onInitialize() {
+    new ModConfig().load();
 
     if (ModConfig.isCommandEnabled()) {
       var cmdname = ModConfig.getCommandName();

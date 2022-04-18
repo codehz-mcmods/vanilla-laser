@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "moe.hertz.vanilla_laser.VanillaLaser"
+    ],
+    "client": [
+      "moe.hertz.vanilla_laser.VanillaLaser"
     ]
   },
   "mixins": [
